@@ -1,0 +1,71 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddedBilling extends Migration {
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up() {
+        Schema::table('users', function ($table) {
+            $table->string('stripe_id')->nullable();
+            $table->string('card_brand')->nullable();
+            $table->string('card_last_four')->nullable();
+            $table->timestamp('trial_ends_at')->nullable();
+        });
+
+        Schema::create('subscriptions', function ($table) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->string('name');
+            $table->string('stripe_id');
+            $table->string('stripe_plan');
+            $table->integer('quantity');
+            $table->timestamp('trial_ends_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+        
+        Schema::create('plans', function ($table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('stripe_id')->unique();
+            $table->integer('products');
+            $table->integer('index');
+            $table->decimal('commission');
+            $table->decimal('price', 6, 2);
+            $table->boolean('paypal')->default(0)->nullable();
+            $table->boolean('card')->default(0)->nullable();
+            $table->boolean('social_accounts')->default(0)->nullable();
+            $table->boolean('builder')->default(0)->nullable();
+            $table->boolean('notifications')->default(0)->nullable();
+            $table->boolean('support')->default(0)->nullable();
+            $table->boolean('enabled')->default(0)->nullable();
+            $table->string('badge')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down() {
+        Schema::table('users', function ($table) {
+            $table->dropColumn('stripe_id');
+            $table->dropColumn('card_brand');
+            $table->dropColumn('card_last_four');
+            $table->dropColumn('trial_ends_at');
+        });
+        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('plans');
+    }
+
+}

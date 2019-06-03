@@ -1,0 +1,62 @@
+.filter {
+    .label {
+        float: left;
+        padding: 5px 10px;
+        background-color: #f2f2f2;
+        border: 1px solid #d2d2d2;
+        font-size: 11px;
+        a.delete {
+            color: #5E5E5E;
+            font-size: 12px;
+        }
+        a.value {
+            border-bottom: 1px dotted #337ab7;
+        }
+    }
+    .filter-block {
+        padding: 5px;
+    }
+    .search-input {
+        margin-left: 10px;
+        float: left;
+        border: none;
+    }
+    .search-input:focus {
+        outline: none;
+    }
+    .filters {
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.148438);
+        background: $gray;
+        position: absolute;
+        z-index: 1001;
+        min-width: 300px;
+    }
+    .tabs-container .tabs-left > .nav-tabs, .tabs-container .tabs-right > .nav-tabs {
+        width: 150px;
+    }
+    .tabs-container .tabs-left .panel-body {
+        margin-left: 150px;
+        min-width: 300px;
+        max-width: 700px;
+    }
+    .filters:before {
+        position: absolute;
+        height: 0;
+        width: 0;
+        border: 1px solid transparent;
+        content: " ";
+        pointer-events: none;
+        bottom: 99%;
+        border-width: 12px;
+        border-bottom-color: $gray;
+        left: 17px;
+        margin-left: -12px;
+    }
+    .filters .form-control {
+        float: none;
+        display: block;
+    }
+}
+.float-e-margins .filter .btn { 
+    margin-bottom: 0px;
+}

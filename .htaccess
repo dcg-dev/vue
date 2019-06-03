@@ -1,0 +1,107 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^$ public/index.html [L]
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<IfVersion < 2.4.4>
+<IfModule filter_module>
+FilterDeclare   COMPRESS
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/html
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/css
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/plain
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/xml
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/x-component
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/javascript
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/json
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xml
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xhtml+xml
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/rss+xml
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/atom+xml
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/vnd.ms-fontobject
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/svg+xml
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/x-font-ttf
+FilterProvider  COMPRESS  DEFLATE resp=Content-Type $font/opentype
+FilterChain     COMPRESS
+FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no
+</IfModule>
+</IfVersion>
+
+<IfVersion >= 2.4.4>
+<IfModule filter_module>
+FilterDeclare   COMPRESS
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'text/html'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'text/css'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'text/plain'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'text/xml'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'text/x-component'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/javascript'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/json'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/xml'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/xhtml+xml'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/rss+xml'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/atom+xml'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/vnd.ms-fontobject'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'image/svg+xml'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'image/x-icon'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'application/x-font-ttf'"
+FilterProvider  COMPRESS  DEFLATE "%{Content_Type} = 'font/opentype'"
+FilterChain     COMPRESS
+FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no
+</IfModule>
+</IfVersion>
+<IfModule !mod_filter.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+    AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+    AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+    <FilesMatch "\.(ttf|otf|eot|svg)$" >
+        SetOutputFilter DEFLATE
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+    AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+    <FilesMatch "\.(ttf|otf|eot|svg)$" >
+        SetOutputFilter DEFLATE
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+    Header set Cache-Control "public"
+    ExpiresActive on
+    ExpiresDefault                          "access plus 1 month"
+    ExpiresByType text/cache-manifest       "access plus 0 seconds"
+    ExpiresByType text/html                 "access plus 0 seconds"
+    ExpiresByType text/xml                  "access plus 0 seconds"
+    ExpiresByType application/xml           "access plus 0 seconds"
+    ExpiresByType application/json          "access plus 0 seconds"
+    ExpiresByType application/rss+xml       "access plus 1 hour"
+    ExpiresByType image/vnd.microsoft.icon  "access plus 1 week"
+    ExpiresByType image/gif                 "access plus 1 month"
+    ExpiresByType image/png                 "access plus 1 month"
+    ExpiresByType image/jpg                 "access plus 1 month"
+    ExpiresByType image/jpeg                "access plus 1 month"
+    ExpiresByType video/ogg                 "access plus 1 month"
+    ExpiresByType audio/ogg                 "access plus 1 month"
+    ExpiresByType video/mp4                 "access plus 1 month"
+    ExpiresByType video/webm                "access plus 1 month"
+    ExpiresByType font/truetype             "access plus 1 month"
+    ExpiresByType font/opentype             "access plus 1 month"
+    ExpiresByType font/woff                 "access plus 1 month"
+    ExpiresByType image/svg+xml             "access plus 1 month"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+    ExpiresByType text/css                  "access plus 1 month"
+    ExpiresByType application/javascript    "access plus 1 month"
+    ExpiresByType text/javascript           "access plus 1 month"
+</IfModule>
+
+
+FileETag None
